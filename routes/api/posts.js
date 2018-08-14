@@ -6,6 +6,9 @@ const passport = require("passport");
 //Post model
 const Post = require("../../models/Post");
 
+//Profile model
+const Profile = require("../../models/Profile");
+
 //Validation
 const validatePostInput = require("../../validation/post");
 
@@ -15,6 +18,28 @@ const validatePostInput = require("../../validation/post");
 router.get("/test", (req, res) => res.json({ msg: "Posts Works" }));
 
 // @route   GET api/posts
+// @desc    Get posts
+// @access  Public
+router.get("/", (req, res) => {
+  Post.find()
+    .sort({ date: -1 })
+    .then(posts => res.json(posts))
+    .catch(err => res.status(404).json({ nopostfound: "No posts found" }));
+});
+
+// @route   GET api/posts/:id
+// @desc    Get post by id
+// @access  Public
+router.get("/:id", (req, res) => {
+  Post.findById(req.params.id)
+    .sort({ date: -1 })
+    .then(post => res.json(post))
+    .catch(err =>
+      res.status(404).json({ nopostfound: "No post found with that id" })
+    );
+});
+
+// @route   POST api/posts
 // @desc    Create post
 // @access  Private route
 router.post(
@@ -36,6 +61,131 @@ router.post(
     });
 
     newPost.save().then(post => res.json(post));
+  }
+);
+
+// @route   PUT api/posts/:id
+// @desc    edit post
+// @access  Private route
+router.put(
+  "/:id",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    Profile.findOne({ user: req.user.id }).then(profile => {
+      Post.findById(req.params.id)
+        .then(post => {
+          //Check for post owner
+          if (post.user.toString() !== req.user.id) {
+            return res.status(401).json({
+              notauthorized: "User not authorized to delete this post"
+            });
+          }
+
+          //Update
+          Post.findByIdAndUpdate(
+            req.params.id,
+            { $set: { text: req.body.text } },
+            { new: true }
+          )
+            .then(() => res.json(post))
+            .catch(err =>
+              res.status(404).json({ nopostfound: "An error has occured" })
+            );
+          post.save();
+        })
+        .catch(err =>
+          res.status(404).json({ nopostfound: "There is no post to edit" })
+        );
+    });
+  }
+);
+
+// @route   DELETE api/posts/:id
+// @desc    Delete post
+// @access  Private route
+router.delete(
+  "/:id",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    Profile.findOne({ user: req.user.id }).then(profile => {
+      Post.findById(req.params.id)
+        .then(post => {
+          //Check for post owner
+          if (post.user.toString() !== req.user.id) {
+            return res.status(401).json({
+              notauthorized: "User not authorized to delete this post"
+            });
+          }
+
+          //Delete
+          post.remove().then(() => res.json({ success: true }));
+        })
+        .catch(err => res.status(404).json({ postnotfound: "No post found" }));
+    });
+  }
+);
+
+// @route   POST api/posts/like/:id
+// @desc    Like pOst
+// @access  Private route
+router.post(
+  "/like/:id",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    Profile.findOne({ user: req.user.id }).then(profile => {
+      Post.findById(req.params.id)
+        .then(post => {
+          if (
+            post.likes.filter(like => like.user.toString() === req.user.id)
+              .length > 0
+          ) {
+            return res
+              .status(400)
+              .json({ alreadyliked: "User already Liked this post" });
+          }
+
+          //Add user id to likes array
+          post.likes.unshift({ user: req.user.id });
+
+          post.save().then(post => res.json(post));
+        })
+        .catch(err => res.status(404).json({ postnotfound: "No post found" }));
+    });
+  }
+);
+
+// @route   POST api/posts/like/:id
+// @desc    Unlike pOst
+// @access  Private route
+router.post(
+  "/unlike/:id",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    Profile.findOne({ user: req.user.id }).then(profile => {
+      Post.findById(req.params.id)
+        .then(post => {
+          if (
+            post.likes.filter(like => like.user.toString() === req.user.id)
+              .length === 0
+          ) {
+            return res
+              .status(400)
+              .json({ notliked: "You Have not yet liked this post" });
+          }
+
+          //Get remove index
+          const removeIndex = post.likes
+            .map(item => item.user.toString())
+            .indexOf(req.user.id);
+
+          //Splice out of array
+          post.likes.splice(removeIndex, 1);
+
+          //Save
+          post.save().then(post => res.json(post));
+        })
+        .catch(err => res.status(404).json({ postnotfound: "No post found" }));
+    });
   }
 );
 
