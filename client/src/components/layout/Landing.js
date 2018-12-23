@@ -12,8 +12,7 @@ class Landing extends Component {
                 <h1 className="display-3 mb-4">YU Review</h1>
                 <p className="lead">
                   {" "}
-                  A site to get reviews about companies and jobs that regularly
-                  list on the lassonde internal job board
+                  A site to get Honest Course Reviews from fellow yorkistanis ;)
                 </p>
                 <hr />
                 <Link to="/register" className="btn btn-lg btn-info mr-2">
