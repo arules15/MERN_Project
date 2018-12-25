@@ -1,6 +1,6 @@
 import React, { Component } from "react";
-import axios from "axios";
 import PropTypes from "prop-types";
+import { withRouter } from "react-router-dom"; //for redirecting in the authActions redux action
 import classnames from "classnames";
 import { connect } from "react-redux";
 import { registerUser } from "../../actions/authActions";
@@ -19,6 +19,22 @@ class Register extends Component {
     this.onChange = this.onChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
   }
+
+  //lifecycle method to check if logged in, if logged in, Login component should not be accessible
+  componentDidMount() {
+    if (this.props.auth.isAuthenticated) {
+      this.props.history.push("/dashboard");
+    }
+  }
+
+  //if the property contains an error field, we set errors state of the componeent to be the error field of the property
+  //this is a react lifecycle method btw
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.errors) {
+      this.setState({ errors: nextProps.errors });
+    }
+  }
+
   //onChange function for changing the state of input boxes  texts, e is an event parameter, this function will take
   //the values inputted into it, and set it to its corresponding state variable
   onChange(e) {
@@ -34,12 +50,12 @@ class Register extends Component {
       password2: this.state.password2
     };
 
-    this.props.registerUser(newUser);
+    this.props.registerUser(
+      newUser,
+      this.props.history
+    ); /*allows us to use this.props.history to redirect from within an action using the
+    withRouter library and wrapping Register with withRouter*/
 
-    // axios
-    //   .post("/api/users/register", newUser)
-    //   .then(res => console.log(res.data))
-    //   .catch(err => this.setState({ errors: err.response.data }));
     //console.log(newUser);
   }
 
@@ -47,11 +63,8 @@ class Register extends Component {
     const { errors } = this.state; // similar to this const errors = this.state.errors, curly braces allows you to pull errors variable
     //out of this.state
 
-    const { user } = this.props.auth;
-
     return (
       <div className="register">
-        {user ? "Welcome to YUReview" + " " + user.name : null}
         <div className="container">
           <div className="row">
             <div className="col-md-8 m-auto">
@@ -106,8 +119,8 @@ class Register extends Component {
                   <input
                     type="password"
                     className={classnames("form-control form-control-lg", {
-                      "is-invalid": errors.password //so class will ne form-control unless errors.name exists, then
-                      //the class will be is-invalid which enables bootstrap to do form validation
+                      "is-invalid": errors.password //so class will be form-control unless errors.name exists, then
+                      //the class will be is-invalid which enables bootstrap to do form validation (highlight imput box in red)
                     })}
                     placeholder="Password"
                     name="password"
@@ -148,15 +161,17 @@ class Register extends Component {
 
 Register.propTypes = {
   registerUser: PropTypes.func.isRequired,
-  auth: PropTypes.object.isRequired
+  auth: PropTypes.object.isRequired,
+  errors: PropTypes.object.isRequired
 };
 
 //below is to get auth state into the component
 const mapStateToProps = state => ({
-  auth: state.auth
+  auth: state.auth,
+  errors: state.errors
 });
 
 export default connect(
   mapStateToProps,
   { registerUser }
-)(Register);
+)(withRouter(Register)); //allows us to export the component Register, with handy router tools to route within an action
