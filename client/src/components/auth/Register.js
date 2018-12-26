@@ -4,6 +4,7 @@ import { withRouter } from "react-router-dom"; //for redirecting in the authActi
 import classnames from "classnames";
 import { connect } from "react-redux";
 import { registerUser } from "../../actions/authActions";
+import TextFieldGroup from "../common/TextFieldGroup";
 
 class Register extends Component {
   constructor() {
@@ -74,7 +75,17 @@ class Register extends Component {
                 contributions and tally likes
               </p>
               <form noValidate onSubmit={this.onSubmit}>
-                <div className="form-group">
+                {/*New input method using new template*/}
+                <TextFieldGroup
+                  placeholder="Username"
+                  name="username"
+                  type="text"
+                  value={this.state.username}
+                  onChange={this.onChange}
+                  error={errors.name}
+                />
+                {/*old input format*/}
+                {/* <div className="form-group">
                   <input
                     //added a value field and called it this.state.username
                     type="text"
@@ -93,8 +104,20 @@ class Register extends Component {
                   {errors.name && (
                     <div className="invalid-feedback">{errors.name}</div>
                   )}
-                </div>
-                <div className="form-group">
+                </div> */}
+
+                {/*New input method using new template*/}
+                <TextFieldGroup
+                  placeholder="Email Address"
+                  name="email"
+                  type="email"
+                  value={this.state.email}
+                  onChange={this.onChange}
+                  error={errors.email}
+                  info="This site uses Gravatar so if you want a profile image, use a Gravatar email"
+                />
+                {/*old input method*/}
+                {/* <div className="form-group">
                   <input
                     type="email"
                     className={classnames("form-control form-control-lg", {
@@ -114,8 +137,19 @@ class Register extends Component {
                     This site uses Gravatar so if you want a profile image, use
                     a Gravatar email
                   </small>
-                </div>
-                <div className="form-group">
+                </div> */}
+
+                {/*New input method using new template*/}
+                <TextFieldGroup
+                  placeholder="Password"
+                  name="password"
+                  type="password"
+                  value={this.state.password}
+                  onChange={this.onChange}
+                  error={errors.password}
+                />
+                {/*old input method*/}
+                {/* <div className="form-group">
                   <input
                     type="password"
                     className={classnames("form-control form-control-lg", {
@@ -131,8 +165,19 @@ class Register extends Component {
                   {errors.password && (
                     <div className="invalid-feedback">{errors.password}</div>
                   )}
-                </div>
-                <div className="form-group">
+                </div> */}
+
+                {/*New input method using new template*/}
+                <TextFieldGroup
+                  placeholder="Confirm Password"
+                  name="password2"
+                  type="password"
+                  value={this.state.password2}
+                  onChange={this.onChange}
+                  error={errors.password2}
+                />
+                {/*old input method*/}
+                {/* <div className="form-group">
                   <input
                     type="password"
                     className={classnames("form-control form-control-lg", {
@@ -148,7 +193,7 @@ class Register extends Component {
                   {errors.password2 && (
                     <div className="invalid-feedback">{errors.password2}</div>
                   )}
-                </div>
+                </div> */}
                 <input type="submit" className="btn btn-info btn-block mt-4" />
               </form>
             </div>
