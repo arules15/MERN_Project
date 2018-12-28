@@ -4,31 +4,31 @@ const isEmpty = require("./is-empty");
 module.exports = function validateProfileInput(data) {
   let errors = {};
 
-  data.handle = !isEmpty(data.handle) ? data.handle : "";
-  data.status = !isEmpty(data.status) ? data.status : "";
-  data.skills = !isEmpty(data.skills) ? data.skills : "";
+  // data.handle = !isEmpty(data.handle) ? data.handle : "";
+  // data.status = !isEmpty(data.status) ? data.status : "";
+  // data.skills = !isEmpty(data.skills) ? data.skills : "";
 
-  if (!Validator.isLength(data.handle, { min: 2, max: 40 })) {
-    errors.handle = "Handle needs to be between 2 and 40 characters";
-  }
+  // if (!Validator.isLength(data.handle, { min: 2, max: 40 })) {
+  //   errors.handle = "Handle needs to be between 2 and 40 characters";
+  // }
 
-  if (Validator.isEmpty(data.handle)) {
-    errors.handle = "Profile handle is required";
-  }
+  // if (Validator.isEmpty(data.handle)) {
+  //   errors.handle = "Profile handle is required";
+  // }
 
-  if (Validator.isEmpty(data.status)) {
-    errors.status = "Status Field is required";
-  }
+  // if (Validator.isEmpty(data.status)) {
+  //   errors.status = "Status Field is required";
+  // }
 
-  if (Validator.isEmpty(data.skills)) {
-    errors.skills = "Skills field is required";
-  }
+  // if (Validator.isEmpty(data.skills)) {
+  //   errors.skills = "Skills field is required";
+  // }
 
-  if (!isEmpty(data.website)) {
-    if (!Validator.isURL(data.website)) {
-      errors.website = "Not a Valid URL";
-    }
-  }
+  // if (!isEmpty(data.website)) {
+  //   if (!Validator.isURL(data.website)) {
+  //     errors.website = "Not a Valid URL";
+  //   }
+  // }
 
   if (!isEmpty(data.youtube)) {
     if (!Validator.isURL(data.youtube)) {
@@ -63,6 +63,12 @@ module.exports = function validateProfileInput(data) {
   if (!isEmpty(data.behance)) {
     if (!Validator.isURL(data.behance)) {
       errors.behance = "Not a Valid URL";
+    }
+  }
+
+  if (!isEmpty(data.github)) {
+    if (!Validator.isURL(data.github)) {
+      errors.github = "Not a Valid URL";
     }
   }
   return {

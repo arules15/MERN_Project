@@ -7,100 +7,95 @@ const ProfileSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: "users"
   },
-  handle: {
-    type: String,
-    required: true,
-    max: 40
-  },
-  company: {
+  // handle: {
+  //   type: String,
+  //   required: true,
+  //   max: 40
+  // },
+  faculty: {
     type: String
   },
-  website: {
+  major: {
     type: String
   },
-  location: {
+  second_major: {
     type: String
   },
-  status: {
-    type: String,
-    required: true
+  minor: {
+    type: String
   },
-  skills: {
-    type: [String],
-    required: true
+  year: {
+    type: String
   },
   bio: {
     type: String
   },
-  githubusername: {
-    type: String
-  },
-  experience: [
-    {
-      title: {
-        type: String,
-        reuired: true
-      },
-      company: {
-        type: String,
-        required: true
-      },
-      location: {
-        type: String
-      },
-      term: {
-        type: Number
-      },
-      from: {
-        type: Date,
-        required: true
-      },
-      to: {
-        type: Date
-      },
-      current: {
-        type: Boolean,
-        default: false
-      },
-      description: {
-        type: String
-      }
-    }
-  ],
+  // experience: [
+  //   {
+  //     title: {
+  //       type: String,
+  //       reuired: true
+  //     },
+  //     company: {
+  //       type: String,
+  //       required: true
+  //     },
+  //     location: {
+  //       type: String
+  //     },
+  //     term: {
+  //       type: Number
+  //     },
+  //     from: {
+  //       type: Date,
+  //       required: true
+  //     },
+  //     to: {
+  //       type: Date
+  //     },
+  //     current: {
+  //       type: Boolean,
+  //       default: false
+  //     },
+  //     description: {
+  //       type: String
+  //     }
+  //   }
+  // ],
 
-  education: [
-    {
-      school: {
-        type: String,
-        reuired: true
-      },
-      degree: {
-        type: String,
-        required: true
-      },
-      fieldofstudy: {
-        type: String,
-        required: true
-      },
-      year: {
-        type: Number
-      },
-      from: {
-        type: Date,
-        required: true
-      },
-      to: {
-        type: Date
-      },
-      current: {
-        type: Boolean,
-        default: false
-      },
-      description: {
-        type: String
-      }
-    }
-  ],
+  // education: [
+  //   {
+  //     school: {
+  //       type: String,
+  //       reuired: true
+  //     },
+  //     degree: {
+  //       type: String,
+  //       required: true
+  //     },
+  //     fieldofstudy: {
+  //       type: String,
+  //       required: true
+  //     },
+  //     year: {
+  //       type: Number
+  //     },
+  //     from: {
+  //       type: Date,
+  //       required: true
+  //     },
+  //     to: {
+  //       type: Date
+  //     },
+  //     current: {
+  //       type: Boolean,
+  //       default: false
+  //     },
+  //     description: {
+  //       type: String
+  //     }
+  //   }
+  // ],
   social: {
     youtube: {
       type: String
@@ -115,6 +110,9 @@ const ProfileSchema = new Schema({
       type: String
     },
     instagram: {
+      type: String
+    },
+    github: {
       type: String
     },
     behance: {
