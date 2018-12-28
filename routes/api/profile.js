@@ -123,8 +123,8 @@ router.post(
     // if (req.body.company) profileFields.company = req.body.company;
     // if (req.body.website) profileFields.website = req.body.website;
     // if (req.body.location) profileFields.location = req.body.location;
-    if (req.body.faculty) profileFields.body.faculty = req.body.faculty;
-    if (req.body.major) profileFields.body.major = req.body.major;
+    if (req.body.faculty) profileFields.faculty = req.body.faculty;
+    if (req.body.major) profileFields.major = req.body.major;
     if (req.body.second_major)
       profileFields.second_major = req.body.second_major;
     if (req.body.minor) profileFields.minor = req.body.minor;

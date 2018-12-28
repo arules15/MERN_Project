@@ -7,6 +7,10 @@ module.exports = function validateProfileInput(data) {
   // data.handle = !isEmpty(data.handle) ? data.handle : "";
   // data.status = !isEmpty(data.status) ? data.status : "";
   // data.skills = !isEmpty(data.skills) ? data.skills : "";
+  data.major = !isEmpty(data.major) ? data.major : "";
+  if (Validator.isEmpty(data.major)) {
+    errors.major = "Major is required";
+  }
 
   // if (!Validator.isLength(data.handle, { min: 2, max: 40 })) {
   //   errors.handle = "Handle needs to be between 2 and 40 characters";
