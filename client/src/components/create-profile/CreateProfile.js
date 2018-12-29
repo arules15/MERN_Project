@@ -43,6 +43,7 @@ class CreateProfile extends Component {
   onSubmit(e) {
     e.preventDefault();
     const profileData = {
+      //handle: this.state.handle
       faculty: this.state.faculty,
       major: this.state.major,
       year: this.state.year,
@@ -213,6 +214,7 @@ class CreateProfile extends Component {
                 {/* For Social Media Links */}
                 <div className="mb-3">
                   <button
+                    type="button"
                     onClick={() => {
                       this.setState(prevState => ({
                         displaySocialInputs: !prevState.displaySocialInputs

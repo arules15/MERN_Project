@@ -13,6 +13,9 @@ const validateLoginInput = require("../../validation/login");
 //Load User model
 const User = require("../../models/User");
 
+//Load axios
+const axios = require("axios");
+
 // @route   GET api/users/test
 // @desc    Tests users route
 // @access  Public route

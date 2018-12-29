@@ -119,7 +119,7 @@ router.post(
     // Get fields
     const profileFields = {};
     profileFields.user = req.user.id;
-    // if (req.body.handle) profileFields.handle = req.body.handle;
+    profileFields.handle = req.user.name;
     // if (req.body.company) profileFields.company = req.body.company;
     // if (req.body.website) profileFields.website = req.body.website;
     // if (req.body.location) profileFields.location = req.body.location;
@@ -158,10 +158,10 @@ router.post(
 
         //Check if handle exists
         Profile.findOne({ handle: profileFields.handle }).then(profile => {
-          if (profile) {
-            errors.handle = "That handle already exists";
-            res.status(400).json(errors);
-          }
+          // if (profile) {
+          //   errors.name = "That handle already exists";
+          //   res.status(400).json(errors);
+          // }
 
           //Save Profile
           new Profile(profileFields).save().then(profile => res.json(profile));
