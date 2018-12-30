@@ -6,7 +6,9 @@ import TextFieldGroup from "../common/TextFieldGroup";
 import TextAreaFieldGroup from "../common/TextAreaFieldGroup";
 import SelectListGroup from "../common/SelectListGroup";
 import InputGroup from "../common/InputGroup";
-import { createProfile } from "../../actions/profileActions";
+import { createProfile, getCurrentProfile } from "../../actions/profileActions";
+import isEmpty from "../../validation/is-empty";
+import { Link } from "react-router-dom";
 //import classnames from "classnames";
 
 class CreateProfile extends Component {
@@ -34,9 +36,65 @@ class CreateProfile extends Component {
     this.onSubmit = this.onSubmit.bind(this);
   }
 
+  componentDidMount() {
+    this.props.getCurrentProfile();
+  }
+
   componentWillReceiveProps(nextProps) {
     if (nextProps.errors) {
       this.setState({ errors: nextProps.errors });
+    }
+    if (nextProps.profile.profile) {
+      const profile = nextProps.profile.profile;
+
+      // If profile field doesn't exist, make empty string
+      profile.faculty = !isEmpty(profile.faculty) ? profile.faculty : "";
+      profile.major = !isEmpty(profile.major) ? profile.major : "";
+      profile.year = !isEmpty(profile.year) ? profile.year : "";
+      profile.second_major = !isEmpty(profile.second_major)
+        ? profile.second_major
+        : "";
+      profile.minor = !isEmpty(profile.minor) ? profile.minor : "";
+      profile.bio = !isEmpty(profile.bio) ? profile.bio : "";
+      profile.social = !isEmpty(profile.social) ? profile.social : {};
+      profile.social.twitter = !isEmpty(profile.social.twitter)
+        ? profile.social.twitter
+        : "";
+      profile.social.facebook = !isEmpty(profile.social.facebook)
+        ? profile.social.facebook
+        : "";
+      profile.social.linkedin = !isEmpty(profile.social.linkedin)
+        ? profile.social.linkedin
+        : "";
+      profile.social.youtube = !isEmpty(profile.social.youtube)
+        ? profile.social.youtube
+        : "";
+      profile.social.instagram = !isEmpty(profile.social.instagram)
+        ? profile.social.instagram
+        : "";
+      profile.social.behance = !isEmpty(profile.social.behance)
+        ? profile.social.behance
+        : "";
+      profile.social.github = !isEmpty(profile.social.github)
+        ? profile.social.github
+        : "";
+
+      //Set componenet fiels state, this has the effect of filling the input boxes with whatever the user entered before
+      this.setState({
+        faculty: profile.faculty,
+        major: profile.major,
+        year: profile.year,
+        second_major: profile.second_major,
+        minor: profile.minor,
+        bio: profile.bio,
+        twitter: profile.twitter,
+        facebook: profile.facebook,
+        linkedin: profile.linkedin,
+        youtube: profile.youtube,
+        instagram: profile.instagram,
+        github: profile.github,
+        behance: profile.behance
+      });
     }
   }
 
@@ -153,11 +211,15 @@ class CreateProfile extends Component {
         <div className="container">
           <div className="row">
             <div className="col-md-8-m-auto">
-              <h1 className="display-4 text-center"> Create Your Profile</h1>
-              <p className="lead text-center">
+              <Link className="btn btn-light" to="/dashboard">
+                Go Back
+              </Link>
+
+              <h1 className="display-4 text-center"> Edit Profile</h1>
+              {/* <p className="lead text-center">
                 Enter Some info below to let other yorkies know a bit about
                 yourself
-              </p>
+              </p> */}
               {/* Faculty Form */}
               <form onSubmit={this.onSubmit}>
                 <TextFieldGroup
@@ -242,6 +304,8 @@ class CreateProfile extends Component {
 }
 
 CreateProfile.propTypes = {
+  createProfile: PropTypes.func.isRequired,
+  getCurrentProfile: PropTypes.func.isRequired,
   profile: PropTypes.object.isRequired,
   errors: PropTypes.object.isRequired
 };
@@ -253,5 +317,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { createProfile }
+  { createProfile, getCurrentProfile }
 )(withRouter(CreateProfile));
