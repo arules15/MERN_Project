@@ -24,7 +24,7 @@ class ProfileItem extends Component {
               {isEmpty(profile.second_major) ? null : (
                 <span>at {profile.second_major}</span>
               )}
-              {isEmpty(profile.minor) ? null : <span> {profile.minor}</span>}
+              {isEmpty(profile.minor) ? null : <span> {profile.minor}</span>}{" "}
               {isEmpty(profile.year) ? null : <span>{profile.year}</span>}
             </p>
             <p>{isEmpty(profile.bio) ? null : <span> {profile.bio}</span>}</p>

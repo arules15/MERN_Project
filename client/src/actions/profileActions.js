@@ -97,3 +97,22 @@ export const getProfiles = () => dispatch => {
       })
     );
 };
+
+//Get Profile by Handle
+export const getProfileByHandle = handle => dispatch => {
+  axios
+    .get(`/api/profile/handle/${handle}`)
+    .then(res =>
+      dispatch({
+        type: GET_PROFILE,
+        payload: res.data
+      })
+    )
+    .catch(err =>
+      dispatch({
+        //THIS IS empty because , user may exist, but does not have a profile
+        type: GET_PROFILE,
+        payload: null
+      })
+    );
+};
