@@ -22,7 +22,7 @@ class ProfileItem extends Component {
             <p>
               {profile.major}{" "}
               {isEmpty(profile.second_major) ? null : (
-                <span>at {profile.second_major}</span>
+                <span> {profile.second_major}</span>
               )}
               {isEmpty(profile.minor) ? null : <span> {profile.minor}</span>}{" "}
               {isEmpty(profile.year) ? null : <span>{profile.year}</span>}

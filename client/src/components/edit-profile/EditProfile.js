@@ -57,25 +57,23 @@ class CreateProfile extends Component {
       profile.minor = !isEmpty(profile.minor) ? profile.minor : "";
       profile.bio = !isEmpty(profile.bio) ? profile.bio : "";
       profile.social = !isEmpty(profile.social) ? profile.social : {};
-      profile.social.twitter = !isEmpty(profile.social.twitter)
+      profile.twitter = !isEmpty(profile.social.twitter)
         ? profile.social.twitter
         : "";
-      profile.social.facebook = !isEmpty(profile.social.facebook)
+      profile.facebook = !isEmpty(profile.social.facebook)
         ? profile.social.facebook
         : "";
-      profile.social.linkedin = !isEmpty(profile.social.linkedin)
+      profile.linkedin = !isEmpty(profile.social.linkedin)
         ? profile.social.linkedin
         : "";
-      profile.social.youtube = !isEmpty(profile.social.youtube)
-        ? profile.social.youtube
-        : "";
-      profile.social.instagram = !isEmpty(profile.social.instagram)
+      profile.youtube = !isEmpty(profile.social.youtube) ? profile.youtube : "";
+      profile.instagram = !isEmpty(profile.social.instagram)
         ? profile.social.instagram
         : "";
-      profile.social.behance = !isEmpty(profile.social.behance)
+      profile.behance = !isEmpty(profile.social.behance)
         ? profile.social.behance
         : "";
-      profile.social.github = !isEmpty(profile.social.github)
+      profile.github = !isEmpty(profile.social.github)
         ? profile.social.github
         : "";
 

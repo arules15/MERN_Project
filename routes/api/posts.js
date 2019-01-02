@@ -39,6 +39,15 @@ router.get("/:id", (req, res) => {
     );
 });
 
+router.get("/:course", (req, res) => {
+  Post.find({ Course: req.params.course })
+    .sort({ date: -1 })
+    .then(post => res.json(post))
+    .catch(err =>
+      res.status(404).json({ nopostfound: "No post found for that courrse" })
+    );
+});
+
 // @route   POST api/posts
 // @desc    Create post
 // @access  Private route

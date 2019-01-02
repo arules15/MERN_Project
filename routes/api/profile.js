@@ -72,11 +72,11 @@ router.get("/handle/:handle", (req, res) => {
       if (!profile) {
         errors.noprofile = "There is no profile for this user";
         res.status(404).json(errors);
+      } else {
+        res.json(profile);
       }
-
-      res.json(profile);
     })
-    .catch(err => res.status(404).json(err));
+    .catch(err => console.log(err) /*res.status(404).json(err)*/);
 });
 
 // @route   GET api/profile/user/:user_id
