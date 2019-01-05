@@ -13,7 +13,7 @@ class Departments extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      Department: ""
+      Department: []
     };
     this.onChange = this.onChange.bind(this);
   }
@@ -23,11 +23,11 @@ class Departments extends Component {
     this.props.getDepartments();
   }
 
-  componentWillRecieveProps(nextProp) {
-    if (nextProp.department.department) {
-      const department = nextProp.department.department;
+  componentWillReceiveProps(nextProp) {
+    if (nextProp.course.department) {
+      const department = nextProp.course.department;
       this.setState({
-        Department: department.sort()
+        Department: department
       });
     }
   }
@@ -38,7 +38,7 @@ class Departments extends Component {
 
   render() {
     const { Department } = this.state;
-    let empt = [];
+    let empt = []; //= [4, 5, 9];
     let i;
     for (i = 0; i < Department.length; i++) {
       empt.push({
@@ -52,6 +52,9 @@ class Departments extends Component {
         <div className="container">
           <div className="row">
             <div className="col-md-12" />
+            {/* {this.state.Department}
+            {empt}
+            {Department.length} */}
             <SelectListGroup
               placeholder="Departments"
               name="Departments"
@@ -74,7 +77,7 @@ Departments.propTypes = {
 };
 
 const mapStateToProps = state => ({
-  Department: state.Department
+  course: state.course
 });
 
 export default connect(
