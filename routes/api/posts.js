@@ -64,6 +64,7 @@ router.post(
     }
     const newPost = new Post({
       text: req.body.text,
+      Course: req.body.Course,
       name: req.body.name,
       avatar: req.body.avatar,
       user: req.user.id
@@ -86,7 +87,7 @@ router.put(
           //Check for post owner
           if (post.user.toString() !== req.user.id) {
             return res.status(401).json({
-              notauthorized: "User not authorized to delete this post"
+              notauthorized: "User not authorized to update this post"
             });
           }
 

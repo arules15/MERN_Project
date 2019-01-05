@@ -18,7 +18,8 @@ const PostSchema = new Schema({
     type: String
   },
   Course: {
-    type: String
+    type: String,
+    required: true
   },
   date: {
     type: Date,
