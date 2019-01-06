@@ -1,7 +1,16 @@
-import { GET_DEPARTMENTS, GET_COURSES, GET_COURSE } from "../actions/types";
+import {
+  GET_DEPARTMENTS,
+  GET_COURSES,
+  GET_COURSE,
+  SET_DEPARTMENT,
+  SET_COURSE
+} from "../actions/types";
 
 const initialState = {
+  departments: null,
   department: null,
+  courses: null,
+  description: null,
   course: null
 };
 
@@ -10,17 +19,27 @@ export default function(state = initialState, action) {
     case GET_DEPARTMENTS:
       return {
         ...state,
+        departments: action.payload
+      };
+    case SET_DEPARTMENT:
+      return {
+        ...state,
         department: action.payload
       };
     case GET_COURSES:
       return {
         ...state,
-        department: action.payload
+        courses: action.payload
+      };
+    case SET_COURSE:
+      return {
+        ...state,
+        course: action.payload
       };
     case GET_COURSE:
       return {
-        course: action.payload,
-        loading: false
+        ...state,
+        descripition: action.payload
       };
 
     default:

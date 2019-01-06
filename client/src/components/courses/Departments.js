@@ -2,20 +2,18 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import SelectListGroup from "../common/SelectListGroup";
-import {
-  getDepartments,
-  getCourses,
-  getCourse
-} from "../../actions/courseActions";
-import { Link } from "react-router-dom";
+import { setDepartments, getDepartments } from "../../actions/courseActions";
+import { Link, withRouter } from "react-router-dom";
 
 class Departments extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      Department: []
+      Departments: [],
+      Department: ""
     };
     this.onChange = this.onChange.bind(this);
+    this.onSubmit = this.onSubmit.bind(this);
   }
 
   componentDidMount() {
@@ -24,12 +22,18 @@ class Departments extends Component {
   }
 
   componentWillReceiveProps(nextProp) {
-    if (nextProp.course.department) {
-      const department = nextProp.course.department;
+    if (nextProp.course.departments) {
+      const departments = nextProp.course.departments;
       this.setState({
-        Department: department
+        Departments: departments
       });
     }
+  }
+
+  onSubmit(e) {
+    e.preventDefault();
+    this.props.setDepartments(this.state.Department);
+    this.props.history.push("/dashboard");
   }
 
   onChange(e) {
@@ -37,13 +41,13 @@ class Departments extends Component {
   }
 
   render() {
-    const { Department } = this.state;
+    const { Departments, Department } = this.state;
     let empt = []; //= [4, 5, 9];
     let i;
-    for (i = 0; i < Department.length; i++) {
+    for (i = 0; i < Departments.length; i++) {
       empt.push({
-        label: Department[i],
-        value: Department[i]
+        label: Departments[i],
+        value: Departments[i]
       });
     }
 
@@ -52,17 +56,24 @@ class Departments extends Component {
         <div className="container">
           <div className="row">
             <div className="col-md-12" />
-            {/* {this.state.Department}
+            <form onSubmit={this.onSubmit}>
+              {/* {this.state.Department}
             {empt}
             {Department.length} */}
-            <SelectListGroup
-              placeholder="Departments"
-              name="Departments"
-              value={this.state.Department}
-              onChange={this.onChange}
-              options={empt}
-              info="Select the Department"
-            />
+              <SelectListGroup
+                placeholder="Departments"
+                name="Department"
+                value={this.state.Department}
+                onChange={this.onChange}
+                options={empt}
+                info="Select the Department"
+              />
+              <input
+                type="submit"
+                value="Submit"
+                className="btn btn-info btn-block mt-4"
+              />
+            </form>
           </div>
         </div>
       </div>
@@ -72,8 +83,10 @@ class Departments extends Component {
 
 Departments.propTypes = {
   //getCourse: PropTypes.func.isRequired,
+  setDepartments: PropTypes.func.isRequired,
   getDepartments: PropTypes.func.isRequired,
-  Department: PropTypes.object.isRequired
+  departments: PropTypes.object.isRequired,
+  department: PropTypes.object.isRequired
 };
 
 const mapStateToProps = state => ({
@@ -82,5 +95,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { getDepartments }
-)(Departments);
+  { getDepartments, setDepartments }
+)(withRouter(Departments));

@@ -11,5 +11,7 @@ export const GET_PROST = "GET_POST";
 export const ADD_POST = "ADD_POST";
 export const DELETE_POST = "DELETE_POST";
 export const GET_DEPARTMENTS = "GET_DEPARTMENTS";
+export const SET_DEPARTMENT = "SET_DEPARTMENT";
 export const GET_COURSES = "GET_COURSES";
+export const SET_COURSE = "SET_COURSE";
 export const GET_COURSE = "GET_COURSE";

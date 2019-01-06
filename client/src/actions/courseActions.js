@@ -1,6 +1,13 @@
 import axios from "axios";
 
-import { GET_DEPARTMENTS, GET_COURSES, GET_COURSE, GET_ERRORS } from "./types";
+import {
+  GET_DEPARTMENTS,
+  GET_COURSES,
+  GET_COURSE,
+  GET_ERRORS,
+  SET_DEPARTMENT,
+  SET_COURSE
+} from "./types";
 
 export const getDepartments = () => dispatch => {
   axios.get("/api/courses/").then(res =>
@@ -9,6 +16,13 @@ export const getDepartments = () => dispatch => {
       payload: res.data
     })
   );
+};
+
+export const setDepartments = department => dispatch => {
+  dispatch({
+    type: SET_DEPARTMENT,
+    payload: department
+  });
 };
 
 export const getCourses = department => dispatch => {
