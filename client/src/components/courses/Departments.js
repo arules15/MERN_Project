@@ -33,7 +33,7 @@ class Departments extends Component {
   onSubmit(e) {
     e.preventDefault();
     this.props.setDepartments(this.state.Department);
-    this.props.history.push("/dashboard");
+    this.props.history.push("/courseList");
   }
 
   onChange(e) {
@@ -71,7 +71,7 @@ class Departments extends Component {
               <input
                 type="submit"
                 value="Submit"
-                className="btn btn-info btn-block mt-4"
+                className="btn btn-primary btn-lg btn-block"
               />
             </form>
           </div>

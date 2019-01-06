@@ -39,7 +39,7 @@ router.get("/", (req, res) => {
     .catch(err => res.json(err));
 });
 
-router.get("/course/:course", (req, res) => {
+router.get("/courses/:course", (req, res) => {
   Course.find({ Course: req.params.course })
     .distinct("Description")
     .then(course => {

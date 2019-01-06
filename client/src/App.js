@@ -23,6 +23,8 @@ import Profile from "./components/profile/Profile";
 import NotFound from "./components/not-found/NotFound";
 import Posts from "./components/posts/Posts";
 import Departments from "./components/courses/Departments";
+import courseList from "./components/courses/courseList";
+import review from "./components/courses/Review";
 
 import "./App.css";
 //import { clearCurrentProfile } from "./actions/profileActions";
@@ -80,6 +82,8 @@ class App extends Component {
               </Switch>
               <Route exact path="/not-found" component={NotFound} />
               <Route exact path="/courses" component={Departments} />
+              <Route exact path="/courseList" component={courseList} />
+              <Route exact path="/review" component={review} />
             </div>
             <Footer />
           </div>

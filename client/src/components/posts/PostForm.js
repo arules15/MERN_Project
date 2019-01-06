@@ -2,7 +2,8 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import TextAreaFieldGroup from "../common/TextAreaFieldGroup";
-import { addPost } from "../../actions/postActions";
+import { addPost, addPostAnon } from "../../actions/postActions";
+import isEmpty from "../../validation/is-empty";
 
 class PostForm extends Component {
   constructor(props) {
@@ -18,9 +19,13 @@ class PostForm extends Component {
   }
 
   componentWillRecieveProps(newProps) {
-    if (newProps.errprs) {
+    if (newProps.errors) {
       this.setState({ errors: newProps.error });
     }
+  }
+
+  componentDidMount() {
+    this.setState({ Course: this.props.course.course });
   }
 
   onSubmitAnon(e) {
@@ -29,7 +34,7 @@ class PostForm extends Component {
       name: "Anonymous",
       Course: this.state.Course
     };
-    this.props.addPost(newPost);
+    this.props.addPostAnon(newPost);
     this.setState({ text: " " });
   }
 
@@ -38,12 +43,15 @@ class PostForm extends Component {
 
     const { user } = this.props.auth;
     let newPost;
-    if (user === null) {
+    if (this.props.auth.isAuthenticated == false) {
       newPost = {
         text: this.state.text,
         name: "Anonymous",
         Course: this.state.Course
       };
+      const newPosts = newPost;
+      this.props.addPostAnon(newPosts);
+      this.setState({ text: " " });
     } else {
       newPost = {
         text: this.state.text,
@@ -51,10 +59,11 @@ class PostForm extends Component {
         avatar: user.avatar,
         Course: this.state.Course
       };
+
+      const newPosts = newPost;
+      this.props.addPost(newPosts);
+      this.setState({ text: " " });
     }
-    const newPosts = newPost;
-    this.props.addPost(newPosts);
-    this.setState({ text: " " });
   }
 
   onChange(e) {
@@ -68,7 +77,8 @@ class PostForm extends Component {
         <div className="post-form mb-3">
           <div className="card card-info">
             <div className="card-header bg-info text-white">
-              Say Somthing...
+              Leave a Review to share your wisdom with future students of our
+              Prestigous Instituion (kek)
             </div>
             <div className="card-body">
               <form onSubmit={this.onSubmit}>
@@ -81,12 +91,14 @@ class PostForm extends Component {
                     error={errors.text}
                   />
                 </div>
-                <button type="submit" className="btn btn-dark">
-                  Submit
-                </button>
-                <button onClick="onSubmitAnon" className="btn btn-dark">
-                  Submit Anonymous
-                </button>
+                <div className="btn-group btn-group-justified">
+                  <button type="submit" className="btn btn-dark">
+                    Submit
+                  </button>
+                  <button onClick="onSubmitAnon" className="btn btn-dark">
+                    Submit Anonymous
+                  </button>
+                </div>
               </form>
             </div>
           </div>
@@ -98,15 +110,18 @@ class PostForm extends Component {
 
 PostForm.propTypes = {
   addPost: PropTypes.func.isRequired,
-  errors: PropTypes.object.isRequired
+  addPostAnon: PropTypes.func.isRequired,
+  errors: PropTypes.object.isRequired,
+  course: PropTypes.object.isRequired
 };
 
 const mapStateToProps = state => ({
+  course: state.course,
   errors: state.errors,
   auth: state.auth
 });
 
 export default connect(
   mapStateToProps,
-  { addPost }
+  { addPost, addPostAnon }
 )(PostForm);

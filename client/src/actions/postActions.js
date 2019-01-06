@@ -19,3 +19,20 @@ export const addPost = postData => dispatch => {
       })
     );
 };
+
+export const addPostAnon = postData => dispatch => {
+  axios
+    .post("/api/posts/anon", postData)
+    .then(res =>
+      dispatch({
+        type: ADD_POST,
+        payload: res.data
+      })
+    )
+    .catch(err =>
+      dispatch({
+        type: GET_ERRORS,
+        payload: err.response.data
+      })
+    );
+};

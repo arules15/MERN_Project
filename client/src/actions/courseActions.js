@@ -25,6 +25,13 @@ export const setDepartments = department => dispatch => {
   });
 };
 
+export const setCourse = course => dispatch => {
+  dispatch({
+    type: SET_COURSE,
+    payload: course
+  });
+};
+
 export const getCourses = department => dispatch => {
   axios
     .get(`/api/courses/course/${department}`)
@@ -44,7 +51,7 @@ export const getCourses = department => dispatch => {
 
 export const getCourse = course => dispatch => {
   axios
-    .get(`/api/courses/course/${course}`)
+    .get(`/api/courses/courses/${course}`)
     .then(res =>
       dispatch({
         type: GET_COURSE,

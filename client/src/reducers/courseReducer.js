@@ -39,7 +39,7 @@ export default function(state = initialState, action) {
     case GET_COURSE:
       return {
         ...state,
-        descripition: action.payload
+        description: action.payload
       };
 
     default:

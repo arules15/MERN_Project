@@ -74,6 +74,30 @@ router.post(
   }
 );
 
+// @route   POST api/posts/anon
+// @desc    Create post
+// @access  Public route
+router.post(
+  "/anon",
+  // passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    const { errors, isValid } = validatePostInput(req.body);
+
+    //Check Validation
+    if (!isValid) {
+      //If any errors, send 400 with errors object
+      return res.status(400).json(errors);
+    }
+    const newPost = new Post({
+      text: req.body.text,
+      Course: req.body.Course,
+      name: req.body.name
+    });
+
+    newPost.save().then(post => res.json(post));
+  }
+);
+
 // @route   PUT api/posts/:id
 // @desc    edit post
 // @access  Private route
