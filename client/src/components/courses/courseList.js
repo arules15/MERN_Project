@@ -67,32 +67,34 @@ class courseList extends Component {
     let j = this.state.Courses.length;
     return (
       <div>
-        <h1 className="display-4 text-center"> Select Desired Course </h1>
-        <form onSubmit={this.onSubmit}>
-          <div className="btn-group-vertical">
-            {this.state.Courses.map(
-              function(course) {
-                return (
-                  <button
-                    type="button"
-                    className="btn btn-primary"
-                    onClick={this.onSubmit}
-                    name={course}
-                    value={course}
-                  >
-                    {course}
-                  </button>
-                );
-              }.bind(this)
-            )}
-          </div>
-          {j}
-          {/* <input
+        <div className="text-center">
+          <h1 className="display-4 text-center"> Select Desired Course </h1>
+          <form onSubmit={this.onSubmit}>
+            <div className="btn-group-vertical">
+              {this.state.Courses.map(
+                function(course) {
+                  return (
+                    <button
+                      type="button"
+                      className="btn btn-primary"
+                      onClick={this.onSubmit}
+                      name={course}
+                      value={course}
+                    >
+                      {course}
+                    </button>
+                  );
+                }.bind(this)
+              )}
+            </div>
+            {j}
+            {/* <input
             type="submit"
             value="Submit"
             className="btn btn-primary btn-lg btn-block"
           /> */}
-        </form>
+          </form>
+        </div>
       </div>
     );
   }

@@ -25,6 +25,12 @@ class Review extends Component {
         Description: description
       });
     }
+    if (nextProp.course.course) {
+      const course = nextProp.course.course;
+      this.setState({
+        Course: course
+      });
+    }
   }
 
   render() {
@@ -33,7 +39,12 @@ class Review extends Component {
         <div className="container">
           <div className="row">
             <div className="col-md-12">
-              {this.state.Description}
+              <div className="card">
+                <div className="card-body">
+                  <h5 className="card-title"> {this.state.Course}</h5>
+                  <p class="card-text">{this.state.Description}</p>
+                </div>
+              </div>
               <PostForm />
             </div>
           </div>
