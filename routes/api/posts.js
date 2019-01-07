@@ -91,7 +91,7 @@ router.post(
     const newPost = new Post({
       text: req.body.text,
       Course: req.body.Course,
-      name: req.body.name
+      name: "Anon"
     });
 
     newPost.save().then(post => res.json(post));

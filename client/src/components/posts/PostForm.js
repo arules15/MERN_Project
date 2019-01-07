@@ -18,9 +18,9 @@ class PostForm extends Component {
     this.onSubmit = this.onSubmit.bind(this);
   }
 
-  componentWillRecieveProps(newProps) {
+  componentWillReceiveProps(newProps) {
     if (newProps.errors) {
-      this.setState({ errors: newProps.error });
+      this.setState({ errors: newProps.errors });
     }
   }
 
@@ -28,15 +28,15 @@ class PostForm extends Component {
     this.setState({ Course: this.props.course.course });
   }
 
-  onSubmitAnon(e) {
-    const newPost = {
-      text: this.state.text,
-      name: "Anonymous",
-      Course: this.state.Course
-    };
-    this.props.addPostAnon(newPost);
-    this.setState({ text: " " });
-  }
+  // onSubmitAnon(e) {
+  //   const newPost = {
+  //     text: this.state.text,
+  //     name: "Anon",
+  //     Course: this.state.Course
+  //   };
+  //   this.props.addPostAnon(newPost);
+  //   this.setState({ text: " " });
+  // }
 
   onSubmit(e) {
     e.preventDefault();
@@ -46,7 +46,7 @@ class PostForm extends Component {
     if (this.props.auth.isAuthenticated == false) {
       newPost = {
         text: this.state.text,
-        name: "Anonymous",
+        name: "Anon",
         Course: this.state.Course
       };
       const newPosts = newPost;
@@ -84,7 +84,7 @@ class PostForm extends Component {
               <form onSubmit={this.onSubmit}>
                 <div className="form-group">
                   <TextAreaFieldGroup
-                    placeholder="Create a Revuew"
+                    placeholder="Leave a Review"
                     name="text"
                     value={this.state.text}
                     onChange={this.onChange}
@@ -94,9 +94,6 @@ class PostForm extends Component {
                 <div className="btn-group btn-group-justified">
                   <button type="submit" className="btn btn-dark">
                     Submit
-                  </button>
-                  <button onClick="onSubmitAnon" className="btn btn-dark">
-                    Submit Anonymous
                   </button>
                 </div>
               </form>

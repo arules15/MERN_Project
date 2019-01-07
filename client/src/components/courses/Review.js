@@ -6,7 +6,7 @@ import { getCourse } from "../../actions/courseActions";
 import { Link, withRouter } from "react-router-dom";
 import { getPosts } from "../../actions/postActions";
 import Spinner from "../common/Spinner";
-import PostFeed from "./posts/PostFeed";
+import PostFeed from "../posts/PostFeed";
 
 class Review extends Component {
   constructor(props) {
@@ -44,7 +44,10 @@ class Review extends Component {
     if (posts === null || loading) {
       postContent = <Spinner />;
     } else {
-      postContent = <PostFeed posts={posts} />;
+      //give PostFeed course from review
+      postContent = (
+        <PostFeed posts={posts} course={this.props.course.course} />
+      );
     }
     return (
       <div className="feed">
@@ -53,7 +56,7 @@ class Review extends Component {
             <div className="col-md-12">
               <div className="card">
                 <div className="card-body">
-                  <h5 className="card-title"> {this.state.Course}</h5>
+                  <h3 className="card-title"> {this.state.Course}</h3>
                   <p class="card-text">{this.state.Description}</p>
                 </div>
               </div>
