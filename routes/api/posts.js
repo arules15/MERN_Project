@@ -39,7 +39,7 @@ router.get("/:id", (req, res) => {
     );
 });
 
-router.get("/:course", (req, res) => {
+router.get("/review/:course", (req, res) => {
   Post.find({ Course: req.params.course })
     .sort({ date: -1 })
     .then(post => res.json(post))

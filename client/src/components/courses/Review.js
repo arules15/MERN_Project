@@ -4,6 +4,9 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { getCourse } from "../../actions/courseActions";
 import { Link, withRouter } from "react-router-dom";
+import { getPosts } from "../../actions/postActions";
+import Spinner from "../common/Spinner";
+import PostFeed from "./posts/PostFeed";
 
 class Review extends Component {
   constructor(props) {
@@ -16,6 +19,7 @@ class Review extends Component {
 
   componentDidMount() {
     //this.props.getCourse();
+    this.props.getPosts(this.props.course.course);
     this.props.getCourse(this.props.course.course);
   }
   componentWillReceiveProps(nextProp) {
@@ -34,6 +38,14 @@ class Review extends Component {
   }
 
   render() {
+    const { posts, loading } = this.props.post;
+    let postContent;
+
+    if (posts === null || loading) {
+      postContent = <Spinner />;
+    } else {
+      postContent = <PostFeed posts={posts} />;
+    }
     return (
       <div className="feed">
         <div className="container">
@@ -46,6 +58,7 @@ class Review extends Component {
                 </div>
               </div>
               <PostForm />
+              {postContent}
             </div>
           </div>
         </div>
@@ -56,16 +69,19 @@ class Review extends Component {
 
 Review.propTypes = {
   //getCourse: PropTypes.func.isRequired,
+  post: PropTypes.object.isRequired,
   getCourse: PropTypes.func.isRequired,
+  getPosts: PropTypes.func.isRequired,
   course: PropTypes.object.isRequired,
   description: PropTypes.object.isRequired
 };
 
 const mapStateToProps = state => ({
+  post: state.post,
   course: state.course
 });
 
 export default connect(
   mapStateToProps,
-  { getCourse }
+  { getCourse, getPosts }
 )(withRouter(Review));
