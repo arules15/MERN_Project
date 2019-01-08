@@ -15,3 +15,4 @@ export const SET_DEPARTMENT = "SET_DEPARTMENT";
 export const GET_COURSES = "GET_COURSES";
 export const SET_COURSE = "SET_COURSE";
 export const GET_COURSE = "GET_COURSE";
+export const CLEAR_ERRORS = "CLEAR_ERRORS";

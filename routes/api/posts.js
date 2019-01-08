@@ -259,6 +259,41 @@ router.post(
   }
 );
 
+// @route   POST api/posts/comment/anon/:id
+// @desc    Add comment to post anonymously
+// @access  Public Route
+
+router.post(
+  "/comment/anon/:id",
+  // passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    const { errors, isValid } = validatePostInput(req.body);
+
+    //Check Validation
+    if (!isValid) {
+      //If any errors, send 400 with errors object
+      return res.status(400).json(errors);
+    }
+
+    Post.findById(req.params.id)
+      .then(post => {
+        const newComment = {
+          text: req.body.text,
+          name: req.body.name
+        };
+
+        //Add to comments array
+        post.comments.unshift(newComment);
+
+        //Save
+        post.save().then(post => res.json(post));
+      })
+      .catch(err =>
+        res.status(404).json({ postnotfound: "No post found to comment on" })
+      );
+  }
+);
+
 // @route   DELETE api/posts/comment/:id/:comment_id
 // @desc    Remove comment from post
 // @access  Private route

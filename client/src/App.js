@@ -25,6 +25,7 @@ import Posts from "./components/posts/Posts";
 import Departments from "./components/courses/Departments";
 import courseList from "./components/courses/courseList";
 import review from "./components/courses/Review";
+import Post from "./components/post/Post";
 
 import "./App.css";
 //import { clearCurrentProfile } from "./actions/profileActions";
@@ -84,6 +85,7 @@ class App extends Component {
               <Route exact path="/courses" component={Departments} />
               <Route exact path="/courseList" component={courseList} />
               <Route exact path="/review" component={review} />
+              <Route exact path="/post/:id" component={Post} />
             </div>
             <Footer />
           </div>
