@@ -86,6 +86,14 @@ class Navbar extends Component {
                 </Link>
               </li>
             </ul>
+            <form class="form-inline">
+              <input
+                class="form-control"
+                type="text"
+                placeholder="Search"
+                aria-label="Search"
+              />
+            </form>
             {isAuthenticated ? authLinks : guestLinks}
           </div>
         </div>

@@ -9,7 +9,7 @@ const Post = require("../../models/Post");
 //Courses model
 const Course = require("../../models/Courses");
 
-// @route   GET api/courses/:department
+// @route   GET api/course/courses/:department
 // @desc    Get all courses in department
 // @access  Public
 router.get("/course/:department", (req, res) => {
@@ -36,6 +36,18 @@ router.get("/", (req, res) => {
     .then(Department => {
       res.json(Department);
     })
+    .catch(err => res.json(err));
+});
+
+// @route   GET api/courses/search/:search
+// @desc    gets all the departments
+// @access  Public route
+let query;
+router.get("/course/search/:search", (req, res) => {
+  query = req.params.search;
+  Course.find({ Course: { $regex: /^query/i } }) //this is supposed to map all the strings that start with query, query holds the search value
+    .distinct("Course")
+    .then(course => res.json(course))
     .catch(err => res.json(err));
 });
 
