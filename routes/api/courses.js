@@ -45,7 +45,7 @@ router.get("/", (req, res) => {
 let query;
 router.get("/course/search/:search", (req, res) => {
   query = req.params.search;
-  Course.find({ Course: { $regex: /^query/i } }) //this is supposed to map all the strings that start with query, query holds the search value
+  Course.find({ Course: new RegExp(query, "i") }) //this is supposed to map all the strings that start with query, query holds the search value
     .distinct("Course")
     .then(course => res.json(course))
     .catch(err => res.json(err));
