@@ -40,7 +40,7 @@ router.get("/", (req, res) => {
 });
 
 // @route   GET api/courses/search/:search
-// @desc    gets all the departments
+// @desc    gets search results
 // @access  Public route
 let query;
 router.get("/course/search/:search", (req, res) => {

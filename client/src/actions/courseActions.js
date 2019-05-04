@@ -6,7 +6,8 @@ import {
   GET_COURSE,
   GET_ERRORS,
   SET_DEPARTMENT,
-  SET_COURSE
+  SET_COURSE,
+  GET_SEARCH
 } from "./types";
 
 export const getDepartments = () => dispatch => {
@@ -55,6 +56,23 @@ export const getCourse = course => dispatch => {
     .then(res =>
       dispatch({
         type: GET_COURSE,
+        payload: res.data
+      })
+    )
+    .catch(err =>
+      dispatch({
+        type: GET_ERRORS,
+        payload: err.response.data
+      })
+    );
+};
+
+export const getSearch = search => dispatch => {
+  axios
+    .get(`api/courses/course/search/${search}`)
+    .then(res =>
+      dispatch({
+        type: GET_SEARCH,
         payload: res.data
       })
     )

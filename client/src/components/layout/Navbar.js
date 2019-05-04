@@ -1,9 +1,10 @@
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import { connect } from "react-redux"; //connecting it to redux
 import { logoutUser } from "../../actions/authActions";
 import { clearCurrentProfile } from "../../actions/profileActions";
+import { getSearch } from "../../actions/courseActions";
+import { Link, withRouter } from "react-router-dom";
 
 class Navbar extends Component {
   onLogoutClick(e) {
@@ -12,6 +13,8 @@ class Navbar extends Component {
     this.props.clearCurrentProfile();
     this.props.logoutUser();
   }
+
+  onSubmit(e) {}
 
   render() {
     const { isAuthenticated, user } = this.props.auth;
@@ -86,7 +89,7 @@ class Navbar extends Component {
                 </Link>
               </li>
             </ul>
-            <form class="form-inline">
+            <form class="form-inline" onSubmit={this.onSubmit}>
               <input
                 class="form-control"
                 type="text"
@@ -104,7 +107,8 @@ class Navbar extends Component {
 
 Navbar.propTypes = {
   logoutUser: PropTypes.func.isRequired,
-  auth: PropTypes.object.isRequired
+  auth: PropTypes.object.isRequired,
+  courses: PropTypes.object.isRequired
 };
 
 const mapStateToProps = state => ({
@@ -113,5 +117,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { logoutUser, clearCurrentProfile }
-)(Navbar);
+  { logoutUser, clearCurrentProfile, getSearch }
+)(withRouter(Navbar));
