@@ -1,7 +1,12 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { setCourse, getCourse, getCourses } from "../../actions/courseActions";
+import {
+  setCourse,
+  getCourse,
+  getCourses,
+  getSearch
+} from "../../actions/courseActions";
 import { Link, withRouter } from "react-router-dom";
 
 class courseList extends Component {
@@ -37,11 +42,17 @@ class courseList extends Component {
   componentDidMount() {
     //this.props.getCourse();
     this.props.getCourses(this.props.course.department);
+    this.props.getSearch(this.props.course.search);
   }
 
   componentWillReceiveProps(nextProp) {
     if (nextProp.course.courses) {
       const courses = nextProp.course.courses;
+      this.setState({
+        Courses: courses
+      });
+    } else if (nextProp.course.search) {
+      const courses = nextProp.course.search;
       this.setState({
         Courses: courses
       });
@@ -104,6 +115,7 @@ courseList.propTypes = {
   //getCourse: PropTypes.func.isRequired,
   setCourse: PropTypes.func.isRequired,
   getCourses: PropTypes.func.isRequired,
+  getSearch: PropTypes.func.isRequired,
   course: PropTypes.object.isRequired,
   courses: PropTypes.object.isRequired,
   department: PropTypes.object.isRequired
@@ -115,5 +127,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { getCourses, setCourse }
+  { getCourses, setCourse, getSearch }
 )(withRouter(courseList));

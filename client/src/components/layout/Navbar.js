@@ -3,10 +3,15 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux"; //connecting it to redux
 import { logoutUser } from "../../actions/authActions";
 import { clearCurrentProfile } from "../../actions/profileActions";
-import { getSearch } from "../../actions/courseActions";
+import { setSearch } from "../../actions/courseActions";
 import { Link, withRouter } from "react-router-dom";
 
 class Navbar extends Component {
+  constructor(props) {
+    super(props);
+    this.onSubmit = this.onSubmit.bind(this);
+  }
+
   onLogoutClick(e) {
     //e is type of event
     e.preventDefault();
@@ -14,7 +19,11 @@ class Navbar extends Component {
     this.props.logoutUser();
   }
 
-  onSubmit(e) {}
+  onSubmit(e) {
+    e.preventDefault();
+    this.props.setSearch(document.getElementById("search").value);
+    this.props.history.push("/courseList");
+  }
 
   render() {
     const { isAuthenticated, user } = this.props.auth;
@@ -91,6 +100,7 @@ class Navbar extends Component {
             </ul>
             <form class="form-inline" onSubmit={this.onSubmit}>
               <input
+                id="search"
                 class="form-control"
                 type="text"
                 placeholder="Search"
@@ -108,7 +118,8 @@ class Navbar extends Component {
 Navbar.propTypes = {
   logoutUser: PropTypes.func.isRequired,
   auth: PropTypes.object.isRequired,
-  courses: PropTypes.object.isRequired
+  courses: PropTypes.object.isRequired,
+  setSearch: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
@@ -117,5 +128,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { logoutUser, clearCurrentProfile, getSearch }
+  { logoutUser, clearCurrentProfile, setSearch }
 )(withRouter(Navbar));

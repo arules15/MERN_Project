@@ -7,7 +7,8 @@ import {
   GET_ERRORS,
   SET_DEPARTMENT,
   SET_COURSE,
-  GET_SEARCH
+  GET_SEARCH,
+  SET_SEARCH
 } from "./types";
 
 export const getDepartments = () => dispatch => {
@@ -23,6 +24,13 @@ export const setDepartments = department => dispatch => {
   dispatch({
     type: SET_DEPARTMENT,
     payload: department
+  });
+};
+
+export const setSearch = search => dispatch => {
+  dispatch({
+    type: SET_SEARCH,
+    payload: search
   });
 };
 

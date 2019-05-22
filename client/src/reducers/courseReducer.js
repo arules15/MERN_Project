@@ -4,7 +4,8 @@ import {
   GET_COURSE,
   SET_DEPARTMENT,
   SET_COURSE,
-  GET_SEARCH
+  GET_SEARCH,
+  SET_SEARCH
 } from "../actions/types";
 
 const initialState = {
@@ -46,6 +47,11 @@ export default function(state = initialState, action) {
       return {
         ...state,
         courses: action.payload
+      };
+    case SET_SEARCH:
+      return {
+        ...state,
+        search: action.payload
       };
     default:
       return state;
