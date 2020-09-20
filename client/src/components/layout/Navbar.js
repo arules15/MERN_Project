@@ -3,13 +3,17 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux"; //connecting it to redux
 import { logoutUser } from "../../actions/authActions";
 import { clearCurrentProfile } from "../../actions/profileActions";
-import { setSearch } from "../../actions/courseActions";
+import { setSearch, getSearch } from "../../actions/courseActions";
 import { Link, withRouter } from "react-router-dom";
 
 class Navbar extends Component {
   constructor(props) {
     super(props);
+    this.state = {
+      search: ""
+    }
     this.onSubmit = this.onSubmit.bind(this);
+    this.onChange = this.onChange.bind(this);
   }
 
   onLogoutClick(e) {
@@ -19,9 +23,21 @@ class Navbar extends Component {
     this.props.logoutUser();
   }
 
+  onChange(e) {
+    this.setState({ [e.target.name]: e.target.value });
+
+  }
+  //Set search parameter and get search results from backend (set search might be redundant, need to look into it)
   onSubmit(e) {
     e.preventDefault();
-    this.props.setSearch(document.getElementById("search").value);
+    this.props.setSearch(this.state.search);
+    //this.props.getSearch(this.ptops.course.search);
+    setTimeout(
+      function () {
+        this.props.getSearch(this.props.course.search);
+      }.bind(this),
+      500
+    );
     this.props.history.push("/courseList");
   }
 
@@ -100,11 +116,14 @@ class Navbar extends Component {
             </ul>
             <form class="form-inline" onSubmit={this.onSubmit}>
               <input
+                name="search"
                 id="search"
                 class="form-control"
                 type="text"
                 placeholder="Search"
                 aria-label="Search"
+                value={this.state.search}
+                onChange={this.onChange}
               />
             </form>
             {isAuthenticated ? authLinks : guestLinks}
@@ -118,15 +137,18 @@ class Navbar extends Component {
 Navbar.propTypes = {
   logoutUser: PropTypes.func.isRequired,
   auth: PropTypes.object.isRequired,
+  course: PropTypes.object.isRequired,
   courses: PropTypes.object.isRequired,
-  setSearch: PropTypes.func.isRequired
+  setSearch: PropTypes.func.isRequired,
+  getSearch: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
-  auth: state.auth
+  auth: state.auth,
+  course: state.course
 });
 
 export default connect(
   mapStateToProps,
-  { logoutUser, clearCurrentProfile, setSearch }
+  { logoutUser, clearCurrentProfile, setSearch, getSearch }
 )(withRouter(Navbar));

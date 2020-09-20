@@ -13,10 +13,11 @@ const initialState = {
   department: null,
   courses: null,
   description: null,
-  course: null
+  course: null,
+  search: null
 };
 
-export default function(state = initialState, action) {
+export default function (state = initialState, action) {
   switch (action.type) {
     case GET_DEPARTMENTS:
       return {

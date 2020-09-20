@@ -14,7 +14,7 @@ class courseList extends Component {
     super(props);
     this.state = {
       Courses: [],
-      Department: "",
+      Department: "THEA",
       Course: ""
     };
     this.onChange = this.onChange.bind(this);
@@ -26,7 +26,7 @@ class courseList extends Component {
     this.setState({ Course: e.target.value });
     //timeout so that the state has enough time to update
     setTimeout(
-      function() {
+      function () {
         this.props.setCourse(this.state.Course);
         this.props.history.push("/review");
       }.bind(this),
@@ -41,20 +41,28 @@ class courseList extends Component {
 
   componentDidMount() {
     //this.props.getCourse();
-    this.props.getCourses(this.props.course.department);
-    this.props.getSearch(this.props.course.search);
-  }
+    if (this.props.course.department) {
+      this.props.getCourses(this.props.course.department);
+    }
+    // else {
+    //   this.props.getSearch(this.props.course.search);
+    // }
 
+  }
+  //On component initialization, set local variable Courses to courses (courses holds the courses in selected department)
+  // if courseList was navigated to using the dropdown, else set it to search
+  //(which holds the result of the search) 
   componentWillReceiveProps(nextProp) {
     if (nextProp.course.courses) {
       const courses = nextProp.course.courses;
       this.setState({
         Courses: courses
       });
-    } else if (nextProp.course.search) {
-      const courses = nextProp.course.search;
+    }
+    else if (nextProp.course.search) {
+      const search = nextProp.course.search;
       this.setState({
-        Courses: courses
+        Courses: search
       });
     }
   }
@@ -79,11 +87,11 @@ class courseList extends Component {
     return (
       <div>
         <div className="text-center">
-          <h1 className="display-4 text-center"> Select Desired Course </h1>
+          <h1 className="display-4 text-center"> Select Desired Course ({j} results)</h1>
           <form onSubmit={this.onSubmit}>
             <div className="btn-group-vertical">
               {this.state.Courses.map(
-                function(course) {
+                function (course) {
                   return (
                     <button
                       type="button"
@@ -98,7 +106,6 @@ class courseList extends Component {
                 }.bind(this)
               )}
             </div>
-            {j}
             {/* <input
             type="submit"
             value="Submit"

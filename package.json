@@ -1,7 +1,7 @@
 {
-  "name": "udemy_project1",
+  "name": "MERN_Project",
   "version": "1.0.0",
-  "description": "Social network for interns",
+  "description": "Course review site for york students",
   "main": "server.js",
   "scripts": {
     "client-install": "npm install --prefix client",

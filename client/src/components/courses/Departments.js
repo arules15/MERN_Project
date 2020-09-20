@@ -10,7 +10,7 @@ class Departments extends Component {
     super(props);
     this.state = {
       Departments: [],
-      Department: ""
+      Department: "THEA"
     };
     this.onChange = this.onChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
